@@ -15,7 +15,6 @@ import {appTheme} from './app.theme';
 import {NotificationProvider} from './_shared/modules/notification/providers/notification-provider';
 import {SnackbarNotification} from './_shared/modules/notification/components/snackbar-notification';
 import {HttpErrorResponseInterceptor} from './_shared/modules/http/interceptors/http-error-response-interceptor';
-import { UserProvider } from './_shared/contexts/user/user.provider';
 import './styles.scss';
 import { useUserConfig } from 'store/useUserConfig';
 
@@ -38,7 +37,6 @@ export const AppComponent: React.FC = () => {
       authService={jwtAuthService}
       cacheStorage={localStorage}
     >
-      <UserProvider>
       <NotificationProvider Component={SnackbarNotification}>
         <HttpProvider client={httpClient}>
           <AuthRequestInterceptor>
@@ -56,7 +54,6 @@ export const AppComponent: React.FC = () => {
           </AuthRequestInterceptor>
         </HttpProvider>
       </NotificationProvider>
-      </UserProvider>
     </AuthProvider>
   );
 };
