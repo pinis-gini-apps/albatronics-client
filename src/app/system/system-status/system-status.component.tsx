@@ -96,6 +96,7 @@ export const SystemStatus: React.FC = () => {
           <Stack direction="row" spacing="1rem" alignItems="center">
             <div>RF Policy</div>
             <Switch
+              disabled
               checked={rfPolicyData?.value === 'allowed'}
               onChange={() => toggleRfPolicyState()}
             />
