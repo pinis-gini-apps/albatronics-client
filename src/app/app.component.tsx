@@ -16,18 +16,18 @@ import {NotificationProvider} from './_shared/modules/notification/providers/not
 import {SnackbarNotification} from './_shared/modules/notification/components/snackbar-notification';
 import {HttpErrorResponseInterceptor} from './_shared/modules/http/interceptors/http-error-response-interceptor';
 import './styles.scss';
-import { useUserConfig } from 'store/useUserConfig';
+import jwt_decode from 'jwt-decode'
+import { initializeUserData } from './api/get';
 
 const jwtAuthService = jwtAuthServiceConstructor({});
 const httpClient = nativeHttpClient as HttpClient;
 
 export const AppComponent: React.FC = () => {
-  const userConfig = useUserConfig(state => state.userConfig);
-  const setUserConfig = useUserConfig(state => state.setUserConfig);
-
+  
   useEffect(() => {
-    if (userConfig.length === 0 && localStorage.getItem('conf') && localStorage.getItem('authToken')) {
-      setUserConfig(JSON.parse(localStorage.getItem('conf')!));
+    if (localStorage.getItem('authToken')) {
+      const decode: {user_id: string} = jwt_decode(localStorage.getItem('authToken')!);
+      initializeUserData(decode.user_id);
     }
   }, [])
 

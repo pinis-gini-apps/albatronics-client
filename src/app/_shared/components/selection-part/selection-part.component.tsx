@@ -30,7 +30,7 @@ export const SelectionPart: React.FC<SelectionPartProps> = ({selectionItems, col
   const [tabs, setTabs] = useState<any[]>([]);
   const [tabIndex, setTabIndex] = React.useState(0);
 
-  useEffect(() => {
+  useEffect(() => {    
     if (userConfig.length > 0) {      
       userConfig.forEach((route: any, i: number) => {
         for (const children of route.childrens) {
