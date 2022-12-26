@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import {styled} from '@mui/material';
 
 import { useUserConfig } from 'store/useUserConfig';
+import { useAllowedRoutes } from 'store/useAllowedRoutes';
 
 type SelectionPartProps = {
   selectionItems: any;
@@ -27,17 +28,20 @@ const SelectionPartTabs = styled(Tabs)<Pick<SelectionPartProps, 'color'>>(
 
 export const SelectionPart: React.FC<SelectionPartProps> = ({selectionItems, color = 'primary'}) => {  
   const userConfig = useUserConfig(state => state.userConfig);
+  const setAllowedRoutes = useAllowedRoutes(state => state.setAllowedRoutes);
   const [tabs, setTabs] = useState<any[]>([]);
   const [tabIndex, setTabIndex] = React.useState(0);
 
-  useEffect(() => {    
-    if (userConfig.length > 0) {      
-      userConfig.forEach((route: any, i: number) => {
-        for (const children of route.childrens) {
-          if (children.checked) {     
-            setTabs(prevState => [...prevState, selectionItems[i]])       
-            break;
-          }}
+
+
+  useEffect(() => {
+    if (userConfig.length > 0) {
+      const routesList = userConfig.map((c: any) => c.id)
+      setAllowedRoutes(routesList)
+      selectionItems.forEach((element: any) => {        
+        if (routesList.includes(element.label.toLowerCase())) {
+          setTabs(prevState => [...prevState, element])
+        }
       });
     }    
   }, [userConfig])

@@ -14,7 +14,7 @@ export const AdminRoutes = () => useRoutes([
     element: <AdminPassword />,
   },
   {
-    path: 'admin-privileges',
+    path: 'developer-privileges',
     element: <UsersPrivileges />
   }
 ]);

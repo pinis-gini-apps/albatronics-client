@@ -17,6 +17,7 @@ export const SelectionPartWithButtons: React.FC<SelectionPartWithButtons> = ({se
   const [tabs, setTabs] = useState<any>([]);
 
   useEffect(() => {    
+    
     if (userConfig.length > 0 && selectionItems.length > 0) {      
       userConfig.forEach((route: any, i: number) => {        
         if(route.id === parent) {
@@ -24,6 +25,8 @@ export const SelectionPartWithButtons: React.FC<SelectionPartWithButtons> = ({se
             if (children.checked) {
               selectionItems.forEach((x:any) => {
                 if(x.label === children.title) {
+                  console.log(children.title, parent);
+                  
                   setTabs((prevState: any) => [...prevState, x])
                 }
               })
@@ -32,7 +35,7 @@ export const SelectionPartWithButtons: React.FC<SelectionPartWithButtons> = ({se
         }
       });      
     }
-  }, [userConfig, selectionItems])
+  }, [userConfig])
   
   
   return (

@@ -9,8 +9,9 @@ import {
 import {SystemRoutes} from './system.routes';
 import {SYSTEM_SELECTION_PART_ITEMS} from './constants/system-selection-part-items';
 
-export const System: React.FC = () => (
-  <>
+export const System: React.FC = () => {
+
+ return <>
     <SelectionPartWithButtons selectionItems={SYSTEM_SELECTION_PART_ITEMS} parent={'system'}/>
     <Box sx={{
       paddingBlock: '1.5rem',
@@ -19,4 +20,4 @@ export const System: React.FC = () => (
       <SystemRoutes />
     </Box>
   </>
-);
+};

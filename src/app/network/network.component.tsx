@@ -9,8 +9,8 @@ import {
 import {NetworkRoutes} from './network.routes';
 import {NETWORK_SELECTION_PART_ITEMS} from './constants/network-selection-part-items';
 
-export const Network: React.FC = () => (
-  <>
+export const Network: React.FC = () => {
+ return  <>
     <SelectionPartWithButtons selectionItems={NETWORK_SELECTION_PART_ITEMS} parent={'network'}/>
     <Box sx={{
       paddingBlock: '1.5rem',
@@ -19,4 +19,4 @@ export const Network: React.FC = () => (
       <NetworkRoutes />
     </Box>
   </>
-);
+};
