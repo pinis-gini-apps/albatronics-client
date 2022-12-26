@@ -5,7 +5,5 @@ export interface AuthServiceLoginResponse {
 export interface AuthService {
   login: (userName: string, password: string) => Promise<AuthServiceLoginResponse>;
   logout: () => Promise<void>;
-  setUserConfig: any;
-  getUserConfig: any;
   refresh: (token: string) => Promise<AuthServiceLoginResponse>;
 }

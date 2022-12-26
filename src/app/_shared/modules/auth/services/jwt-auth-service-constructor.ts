@@ -1,5 +1,6 @@
 import { AuthService } from '../models/auth-service';
-import { useUserConfig } from '../../../../../store/useUserConfig';
+import jwt_decode from 'jwt-decode';
+import { initializeUserData } from 'app/api/get';
 type AuthServiceConstructor<Options> = (options: Options) => AuthService;
 type JwtAuthServiceConstructorOptions = {};
 
@@ -13,55 +14,10 @@ export const jwtAuthServiceConstructor: AuthServiceConstructor<JwtAuthServiceCon
       });
       const text = await response.text();
       const res = JSON.parse(text);      
-      if (res.role) {
-        const response = await fetch(`/api/user/config/${res.role.toLowerCase()}`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${res.token}`,
-            sensitive: 'true', mode: 'cors',
-            'Content-Type': 'application/json'
-          },
-        });
-        const data = await response.text();
-        const result = await JSON.parse(data);
-        localStorage.setItem('conf', JSON.stringify(result));
-        useUserConfig.getState().setUserConfig(result)
+      if (res.token) {
+        const decode: {user_id: string} = await jwt_decode(res.token);
+        await initializeUserData(decode.user_id, res.token)
       }
-      return text ? res : {};
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  setUserConfig: async (data: any) => {
-    try {
-      const response = await fetch('/api/user/config', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-          sensitive: 'true', mode: 'cors',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data),
-      });
-      const text = await response.text();
-      const res = JSON.parse(text);
-      return text ? res : {};
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  getUserConfig: async (userRole: string) => {
-    try {
-      const response = await fetch(`/api/user/config/${userRole}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-          sensitive: 'true', mode: 'cors',
-          'Content-Type': 'application/json'
-        },
-      });
-      const text = await response.text();
-      const res = await JSON.parse(text);
       return text ? res : {};
     } catch (error) {
       console.error(error);

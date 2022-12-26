@@ -3,7 +3,7 @@ import {SelectionPartItem} from '../../_shared/components/selection-part/models/
 export const ADMIN_SELECTION_PART_ITEMS: ReadonlyArray<SelectionPartItem> = [
   { label: 'Password', route: './password', },
   { label: 'Users privileges', route: './users-privileges', },
-  { label: 'Developer privileges', route: './admin-privileges', },
+  { label: 'Developer privileges', route: './developer-privileges', },
 ];
 
 
@@ -16,7 +16,7 @@ export const ROUTING_LIST = [
   { id:'gps', title: 'GPS', childrens: [{title: 'Performances', id:'performances', checked: true}]},
   { id:'diagnostic', title: 'Diagnostic', childrens: [{title: 'Summery', id:'summery', checked: true}, {title: 'Ping Test', id:'ping_test', checked: true}, {title: 'Throughput test', id:'throughput_test', checked: true}]},
   { id:'logs', title: 'Logs', childrens: [{title: 'Summery', id:'summery', checked: true}, {title: 'EPC & eNodeB', id:'epc_enodeb', checked: true}, {title: 'Report', id:'', checked: true}]},
-  { id:'privileges', title: 'Admin', childrens: [{title: 'Password', id:'', checked: true}, {title: 'Users Privileges', id:'', checked: true}, {title: 'Admin privileges', id:'', checked: true}]},
+  { id:'privileges', title: 'Privileges', childrens: [{title: 'Password', id:'', checked: true}, {title: 'Users Privileges', id:'', checked: true}, {title: 'Admin privileges', id:'', checked: true}]},
 ]
 
 export const USER_TYPES = [{id: 'operator_role', title: 'Operator'}]

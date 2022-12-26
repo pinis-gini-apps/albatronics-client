@@ -9,5 +9,5 @@ export const MAIN_SELECTION_PART_ITEMS: ReadonlyArray<SelectionPartItem> = [
   { label: 'GPS', route: './gps', },
   { label: 'Diagnostic', route: './diagnostic', },
   { label: 'Logs', route: './logs', },
-  { label: 'Privileges', route: './admin', },
+  { label: 'Privileges', route: './privileges', },
 ];

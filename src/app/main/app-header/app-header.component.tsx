@@ -21,10 +21,11 @@ import {strip3LedConfig} from './constants/strip3-led.config';
 import {strip4LedConfig} from './constants/strip4-led.config';
 import {strip5LedConfig} from './constants/strip5-led.config';
 import {formatHeaderDate} from './constants/format-header-date';
+import { useUserData } from 'store/useUserData';
 
 export const AppHeader: React.FC = () => {
   const ledInfo = React.useContext(LedInfoContext);
-
+  const {username} = useUserData(state => state.userData)
   const navigate = useNavigate();
   const {logout} = React.useContext(AuthContext);
   const handleLogout = React.useCallback(async () => {
@@ -85,7 +86,7 @@ export const AppHeader: React.FC = () => {
           <div>Backhaul</div>
         </li>
         <div className="d-grid j-i-center">
-          <Typography variant="h5" className="j-self-center">Developer</Typography>
+          <Typography variant="h5" className="j-self-center">{username}</Typography>
           <div className="j-self-center">{formatHeaderDate(new Date())}</div>
         </div>
         <Button

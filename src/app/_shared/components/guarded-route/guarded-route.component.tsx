@@ -7,7 +7,7 @@ type GuardedRouteProps = {
   children?: ReactElement;
 };
 
-export const GuardedRoute: React.FC<GuardedRouteProps> = ({isAllowed, redirectPath, children}) => {
+export const GuardedRoute: React.FC<GuardedRouteProps> = ({isAllowed, redirectPath, children}) => {  
   if (!isAllowed) {
     return <Navigate to={redirectPath} replace />
   }

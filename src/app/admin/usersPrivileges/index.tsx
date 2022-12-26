@@ -3,14 +3,13 @@ import Typography from '@mui/material/Typography';
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from '@mui/material';
 import Button from '@mui/material/Button';
 import { USER_TYPES } from '../constants/admin-selection-part-items';
-import { useAuth } from 'app/_shared/modules/auth/hooks/use-auth';
+import { getUserConfig, setUserConfig } from 'app/api/get';
 
 const UsersPrivileges = () => {
   const [list, setList] = useState<any[]>([])
   const [currentRouteIndex, setCurrentRouteIndex] = useState(0);
   const [currentRouteChildrens, setCurrentRouteChildrens] = useState<any[]>([]);
   const [currentRole, setCurrentRole] = useState<string>('');
-  const { setUserConfig, getUserConfig } = useAuth();
 
 
 

@@ -61,8 +61,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({authService, cacheSto
       isLogged:  Boolean(token) && !isJwtExpired(token!),
       login,
       logout,
-      setUserConfig: authService.setUserConfig,
-      getUserConfig: authService.getUserConfig,
       getToken,
     }),
     [
