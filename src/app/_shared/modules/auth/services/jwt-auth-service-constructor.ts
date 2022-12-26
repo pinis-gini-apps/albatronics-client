@@ -1,6 +1,7 @@
 import { AuthService } from '../models/auth-service';
 import jwt_decode from 'jwt-decode';
 import { initializeUserData } from 'app/api/get';
+import { useSystemData } from 'store/useSystemData';
 type AuthServiceConstructor<Options> = (options: Options) => AuthService;
 type JwtAuthServiceConstructorOptions = {};
 
@@ -30,7 +31,12 @@ export const jwtAuthServiceConstructor: AuthServiceConstructor<JwtAuthServiceCon
         method: 'GET',
         headers: { Authorization: `Bearer ${token}`, sensitive: 'true' },
       });
+      
       const text = await response.text();
+      const res = JSON.parse(text);      
+      if (res.systemCurrentTime) {
+        useSystemData.getState().setSystemData('timestamp', res.systemCurrentTime);
+      }
       return text ? JSON.parse(text) : {};
     } catch (error) {
       console.error(error);

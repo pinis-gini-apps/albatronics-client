@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -20,14 +20,23 @@ import {strip2LedConfig} from './constants/strip2-led.config';
 import {strip3LedConfig} from './constants/strip3-led.config';
 import {strip4LedConfig} from './constants/strip4-led.config';
 import {strip5LedConfig} from './constants/strip5-led.config';
-import {formatHeaderDate} from './constants/format-header-date';
 import { useUserData } from 'store/useUserData';
+import { useSystemData } from 'store/useSystemData';
 
 export const AppHeader: React.FC = () => {
+  const timestamp = useSystemData(state => state.systemData.timestamp);
+  const [deviceTimestamp, setDeviceTimestamp] = useState('');
   const ledInfo = React.useContext(LedInfoContext);
   const {username} = useUserData(state => state.userData)
   const navigate = useNavigate();
   const {logout} = React.useContext(AuthContext);
+
+  useEffect(() => {
+    if (timestamp) {
+      setDeviceTimestamp(timestamp)
+    }
+  }, [timestamp])
+
   const handleLogout = React.useCallback(async () => {
     await logout();
     navigate('/login');
@@ -87,7 +96,7 @@ export const AppHeader: React.FC = () => {
         </li>
         <div className="d-grid j-i-center">
           <Typography variant="h5" className="j-self-center">{username}</Typography>
-          <div className="j-self-center">{formatHeaderDate(new Date())}</div>
+          <div className="j-self-center">{deviceTimestamp}</div>
         </div>
         <Button
           variant="outlined"
