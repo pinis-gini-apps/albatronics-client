@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup } from '@mui/material';
 import Button from '@mui/material/Button';
 import { USER_TYPES } from '../constants/admin-selection-part-items';
-import { getUserConfig, setUserConfig } from 'app/api/get';
+import { getAllUserConfig, setUserConfig } from 'app/api/get';
 
 const UsersPrivileges = () => {
   const [list, setList] = useState<any[]>([])
@@ -13,8 +13,8 @@ const UsersPrivileges = () => {
 
 
 
-  const userCongif = async () => {
-    const config: any = await getUserConfig(currentRole);
+  const getUserCongif = async () => {
+    const config: any = await getAllUserConfig(currentRole);
     setList(config)
     setCurrentRouteChildrens(JSON.parse(JSON.stringify(config[currentRouteIndex]?.childrens)))
   }
@@ -22,7 +22,9 @@ const UsersPrivileges = () => {
 
   useEffect(() => {
     if(currentRole) {
-      userCongif();
+      console.log(currentRole);
+      
+      getUserCongif();
     }
   }, [currentRole])
 
@@ -32,7 +34,7 @@ const UsersPrivileges = () => {
       route: list[currentRouteIndex].id,
       updatedRoutes: [...currentRouteChildrens]
     })
-    await userCongif();
+    await getUserCongif();
   }
 
 
