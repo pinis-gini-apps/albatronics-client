@@ -22,7 +22,25 @@ export const setUserConfig = async (data: any) => {
 
 export const getUserConfig = async (userRole: string, token = '') => {
     try {
-        const response = await fetch(`/api/user/config/${userRole.toLowerCase()}`, {
+        const response = await fetch(`/api/user/config/${userRole.toLowerCase()}/0`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token || localStorage.getItem('authToken')}`,
+                sensitive: 'true', mode: 'cors',
+                'Content-Type': 'application/json'
+            },
+        });
+        const text = await response.text();
+        const res = await JSON.parse(text);
+        return text ? res : {};
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const getAllUserConfig = async (userRole: string, token = '') => {
+    try {
+        const response = await fetch(`/api/user/config/${userRole.toLowerCase()}/1`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token || localStorage.getItem('authToken')}`,
