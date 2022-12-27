@@ -14,7 +14,7 @@ type AuthProviderProps = {
 
 const CACHE_STORAGE_KEY_NAME = 'authToken';
 const UPDATE_TOKEN_WINDOW_IN_MILLISECONDS = 1000 * 60 * 5;
-const IDLE_TIMER = 1000 * 60 * 5;
+const IDLE_TIMER = 1000 * 60 * 30;
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({authService, cacheStorage, children}) => {
   const [token, setToken] = useState(() => cacheStorage.getItem(CACHE_STORAGE_KEY_NAME));
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({authService, cacheSto
       if (!token) {
         return;
       }
-      const shouldUpdateToken = getJwtExpirationDate(token)! <  Date.now() + UPDATE_TOKEN_WINDOW_IN_MILLISECONDS;
+      const shouldUpdateToken = getJwtExpirationDate(token)! <  Date.now() + UPDATE_TOKEN_WINDOW_IN_MILLISECONDS;      
       if (shouldUpdateToken) {
         const {token: updatedToken} = await authService.refresh(token!);
         if (!updatedToken) {
