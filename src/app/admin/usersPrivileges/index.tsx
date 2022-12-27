@@ -21,9 +21,7 @@ const UsersPrivileges = () => {
 
 
   useEffect(() => {
-    if(currentRole) {
-      console.log(currentRole);
-      
+    if(currentRole) {      
       getUserCongif();
     }
   }, [currentRole])
