@@ -18,12 +18,14 @@ export const composeSystemAllUpsertDto = (
     tooltip,
     restWarm,
     modifiedTime,
+    data_type
   }: SystemAllInformation
 ): SystemAllInformation => ({
   id,
   name,
   value,
   dataType,
+  prevDataType: data_type,
   typeId: coerceToNullableNumber(typeId as number) as number,
   changeStatus,
   visible,

@@ -68,8 +68,8 @@ export const SystemAll: React.FC = () => {
     [deleteSystemAllData, fetchSystemAllData],
   );
   const handleUpdateAction = React.useCallback(
-    async (systemAll: SystemAllInformation) => {
-      await updateSystemAllData({url: '/api/system/all-selection', body: composeSystemAllUpsertDto(systemAll)});
+    async (systemAll: SystemAllInformation) => {      
+      await updateSystemAllData({url: '/api/system/all-selection', body: composeSystemAllUpsertDto({...systemAll, prevDataType: systemAll.data_type})});
       fetchSystemAllData();
     },
     [updateSystemAllData, fetchSystemAllData],
