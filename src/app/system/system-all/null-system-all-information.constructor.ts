@@ -8,9 +8,9 @@ export const nullSystemAllInformationConstructor = (): Nullable<SystemAllInforma
   value: null,
   dataType: null,
   typeId: null,
-  changeStatus: null,
+  changeStatus: 0,
   visible: false,
-  tooltip: null,
-  restWarm: null,
+  tooltip: '',
+  restWarm: 0,
   modifiedTime: new Date().toISOString(),
 });
