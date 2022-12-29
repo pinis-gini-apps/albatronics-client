@@ -10,7 +10,7 @@ export const nullSystemAllInformationConstructor = (): Nullable<SystemAllInforma
   typeId: null,
   changeStatus: 0,
   visible: false,
-  tooltip: null,
-  restWarm: null,
+  tooltip: '',
+  restWarm: 0,
   modifiedTime: new Date().toISOString(),
 });
