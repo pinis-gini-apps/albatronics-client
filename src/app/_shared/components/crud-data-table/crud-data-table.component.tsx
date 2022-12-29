@@ -76,7 +76,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
         onModeChange(GridRowModes.Edit);
       }
     },
-    [setRowModesModel],
+    [rowModesModel],
   );
   const handleEditClick = React.useCallback(
     (id: GridRowId) => () => {
@@ -88,7 +88,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
       onModeChange(GridRowModes.Edit);
     }
   },
-    [setRowModesModel],
+    [rowModesModel],
   );
   const handleSaveClick = React.useCallback(
     (id: GridRowId) => () => {
@@ -100,7 +100,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
       onModeChange(GridRowModes.View);
     }
   },
-    [setRowModesModel],
+    [rowModesModel],
     );
   const handleCancelClick = React.useCallback(
     (id: GridRowId, row: T) => () => {
@@ -118,7 +118,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
       onModeChange(GridRowModes.View);
     }
   },
-  [setRowModesModel, setRows],
+  [rowModesModel, rows],
   );
   const processRowUpdate = React.useCallback(
     (row: T) => {
@@ -177,6 +177,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
       rows={rows}
       editMode="row"
       columns={[...columns, actionsColumn]}
+      isCellEditable={(params) => (params.field  !== 'changeStatus' && params.field  !== 'modifiedTime')}
       hideFooter={true}
       rowModesModel={rowModesModel}
       components={{Toolbar: CrudDataTableEditToolbar}}
