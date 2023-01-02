@@ -10,7 +10,6 @@ import {systemAllTableColumns} from './constants/system-all-table-columns';
 import {SystemAllInformation} from './models/system-all-information';
 import {composeSystemAllUpsertDto} from './constants/compose-system-all-upsert-dto';
 import {nullSystemAllInformationConstructor} from './null-system-all-information.constructor';
-import {GridRowModes} from '@mui/x-data-grid';
 
 export const SystemAll: React.FC = () => {
   const {
@@ -24,56 +23,25 @@ export const SystemAll: React.FC = () => {
   const {operation: updateSystemAllData} = useHttp<SystemAllInformation[]>({method: 'PUT'});
   const {operation: deleteSystemAllData} = useHttp<SystemAllInformation[]>({method: 'DELETE'});
 
-  let intervalId: string | number | NodeJS.Timer | undefined;
-  let editMode: boolean;
-
   useEffect(() => {
     fetchSystemAllData();
-    if(!editMode) {
-        startInterval();
-        return () => {
-            clearInterval(intervalId);
-        };
-    }
   }, []);
 
-  const handleTableChangeMode = (mode: GridRowModes) => {
-    if (mode === GridRowModes.View) {
-        editMode = false
-        startInterval();
-    } else {
-        editMode = true;
-        clearInterval(intervalId);
-    }
-  };
 
-  const startInterval = () => {
-      intervalId = setInterval(() => {
-          fetchSystemAllData();
-      }, 4000);
+  const handleCreateAction = async (systemAll: SystemAllInformation) => {
+      await createSystemAllData({url: '/api/system/all-selection', body: systemAll});      
+      await fetchSystemAllData();
+    }
+
+  const handleDeleteAction = async ({id}: SystemAllInformation) => {
+      await deleteSystemAllData({url: `/api/system/all-selection/${id}`});
+      await fetchSystemAllData();
   }
 
-  const handleCreateAction = React.useCallback(
-    async (systemAll: SystemAllInformation) => {
-      await createSystemAllData({url: '/api/system/all-selection', body: systemAll});
-      fetchSystemAllData();
-    },
-    [updateSystemAllData, fetchSystemAllData],
-  );
-  const handleDeleteAction = React.useCallback(
-    async ({id}: SystemAllInformation) => {
-      await deleteSystemAllData({url: `/api/system/all-selection/${id}`});
-      fetchSystemAllData();
-  },
-    [deleteSystemAllData, fetchSystemAllData],
-  );
-  const handleUpdateAction = React.useCallback(
-    async (systemAll: SystemAllInformation) => {
+  const handleUpdateAction = async (systemAll: SystemAllInformation) => {
       await updateSystemAllData({url: '/api/system/all-selection', body: composeSystemAllUpsertDto(systemAll)});
-      fetchSystemAllData();
-    },
-    [updateSystemAllData, fetchSystemAllData],
-  );
+      await fetchSystemAllData();
+    };
 
   return (
     <Stack
@@ -90,7 +58,6 @@ export const SystemAll: React.FC = () => {
         onCreateActionClick={handleCreateAction}
         onUpdateActionClick={handleUpdateAction}
         onDeleteActionClick={handleDeleteAction}
-        onModeChange={handleTableChangeMode}
       />
     </Stack>
   );

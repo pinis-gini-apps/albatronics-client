@@ -48,19 +48,16 @@ export const CrudDataTable = <T extends GridValidRowModel>(
     onUpdateActionClick,
     onCreateActionClick,
     emptyRowConstructor,
-    onModeChange
   }: CrudDataTableProps<T>
 ): ReactElement => {
   const [rows, setRows] = React.useState<T[]>([]);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
   const handleProcessRowUpdateError = React.useCallback((error: Error) => {}, []);
   
-  React.useEffect(
-    () => {
+  React.useEffect(() => {
       setRows(data);
     },
-    [data],
-  );
+    [data]);
   
   const handleAddRowClick = React.useCallback(
     () => {
@@ -72,36 +69,30 @@ export const CrudDataTable = <T extends GridValidRowModel>(
           mode: GridRowModes.Edit,
         },
       }));
-      if (onModeChange) {
-        onModeChange(GridRowModes.Edit);
-      }
     },
-    [rowModesModel],
+    [emptyRowConstructor],
   );
+
   const handleEditClick = React.useCallback(
     (id: GridRowId) => () => {
     setRowModesModel({
       ...rowModesModel,
       [id]: {mode: GridRowModes.Edit},
     });
-    if (onModeChange) {
-      onModeChange(GridRowModes.Edit);
-    }
   },
     [rowModesModel],
   );
+
   const handleSaveClick = React.useCallback(
-    (id: GridRowId) => () => {
+    (id: GridRowId) => () => {      
     setRowModesModel({
       ...rowModesModel,
       [id]: {mode: GridRowModes.View},
     });
-    if (onModeChange) {
-      onModeChange(GridRowModes.View);
-    }
   },
     [rowModesModel],
     );
+
   const handleCancelClick = React.useCallback(
     (id: GridRowId, row: T) => () => {
     setRowModesModel({
@@ -114,12 +105,10 @@ export const CrudDataTable = <T extends GridValidRowModel>(
     if (isNewRow(row)) {
       setRows(rows => rows.filter(r => r.id !== row.id));
     }
-    if (onModeChange) {
-      onModeChange(GridRowModes.View);
-    }
   },
-  [rowModesModel, rows],
+  [rowModesModel],
   );
+
   const processRowUpdate = React.useCallback(
     (row: T) => {
       if (isNewRow(row)) {
@@ -129,8 +118,9 @@ export const CrudDataTable = <T extends GridValidRowModel>(
       }
     return row;
   },
-  [onUpdateActionClick],
+  [onUpdateActionClick, onCreateActionClick],
   );
+
   const actionsColumn: GridEnrichedColDef<T> = {
     field: 'actions',
     type: 'actions',
