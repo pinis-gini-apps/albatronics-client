@@ -24,13 +24,13 @@ import {SystemStatusRfPolicyInformation} from './models/system-status-rf-policy-
 
 export const SystemStatus: React.FC = () => {
   const ledInfo = React.useContext(LedInfoContext);
-  const {operation: fetchSystemData, data: systemData} = useHttp<SystemStatusSystemInformation[]>({url: '/api/system/status/system', method: 'GET'});
-  const {operation: fetchCellularData, data: cellularData} = useHttp<SystemStatusCellularInformation[]>({url: '/api/system/status/cellular', method: 'GET'});
-  const {operation: fetchPerformanceData, data: performanceData} = useHttp<SystemStatusPerformanceInformation[]>({url: '/api/system/status/performance', method: 'GET'});
-  const {operation: fetchENodeBStateDataData, data: eNodeBStateData} = useHttp<SystemStatusENodeBInformation>({url: '/api/enodeb', method: 'GET'});
-  const {operation: fetchRfPolicyData, data: rfPolicyData} = useHttp<SystemStatusRfPolicyInformation>({url: '/api/rfpolicy', method: 'GET'});
-  const {operation: setAllowedRfPolicyState} = useHttp<SystemStatusRfPolicyInformation>({url: '/api/rfpolicy/allowed', method: 'PUT'});
-  const {operation: setBlockedRfPolicyState} = useHttp<SystemStatusRfPolicyInformation>({url: '/api/rfpolicy/blocked', method: 'PUT'});
+  const {operation: fetchSystemData, data: systemData} = useHttp<SystemStatusSystemInformation[]>({url: '/api/v1/system/status/system', method: 'GET'});
+  const {operation: fetchCellularData, data: cellularData} = useHttp<SystemStatusCellularInformation[]>({url: '/api/v1/system/status/cellular', method: 'GET'});
+  const {operation: fetchPerformanceData, data: performanceData} = useHttp<SystemStatusPerformanceInformation[]>({url: '/api/v1/system/status/performance', method: 'GET'});
+  const {operation: fetchENodeBStateDataData, data: eNodeBStateData} = useHttp<SystemStatusENodeBInformation>({url: '/api/v1/enodeb', method: 'GET'});
+  const {operation: fetchRfPolicyData, data: rfPolicyData} = useHttp<SystemStatusRfPolicyInformation>({url: '/api/v1/rfpolicy', method: 'GET'});
+  const {operation: setAllowedRfPolicyState} = useHttp<SystemStatusRfPolicyInformation>({url: '/api/v1/rfpolicy/allowed', method: 'PUT'});
+  const {operation: setBlockedRfPolicyState} = useHttp<SystemStatusRfPolicyInformation>({url: '/api/v1/rfpolicy/blocked', method: 'PUT'});
   const fetchRequiredData = React.useCallback(
     () => {
       fetchSystemData();

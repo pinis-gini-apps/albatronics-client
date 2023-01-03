@@ -34,8 +34,8 @@ export const jwtAuthServiceConstructor: AuthServiceConstructor<JwtAuthServiceCon
       
       const text = await response.text();
       const res = JSON.parse(text);      
-      if (res.systemCurrentTime) {
-        useSystemData.getState().setSystemData('timestamp', res.systemCurrentTime);
+      if (res.timestamp) {
+        useSystemData.getState().setSystemData('timestamp', res.timestamp);
       }
       return text ? JSON.parse(text) : {};
     } catch (error) {
