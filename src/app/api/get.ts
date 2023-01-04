@@ -3,7 +3,7 @@ import { useUserData } from "store/useUserData";
 
 export const setUserConfig = async (data: any) => {
     try {
-        const response = await fetch('/api/user/config', {
+        const response = await fetch('/api/v1/user/config', {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('authToken')}`,
@@ -22,7 +22,7 @@ export const setUserConfig = async (data: any) => {
 
 export const getUserConfig = async (userRole: string, token = '') => {
     try {
-        const response = await fetch(`/api/user/config/${userRole.toLowerCase()}/0`, {
+        const response = await fetch(`/api/v1/user/config/${userRole.toLowerCase()}/0`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token || localStorage.getItem('authToken')}`,
@@ -40,7 +40,7 @@ export const getUserConfig = async (userRole: string, token = '') => {
 
 export const getAllUserConfig = async (userRole: string, token = '') => {
     try {
-        const response = await fetch(`/api/user/config/${userRole.toLowerCase()}/1`, {
+        const response = await fetch(`/api/v1/user/config/${userRole.toLowerCase()}/1`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token || localStorage.getItem('authToken')}`,
@@ -58,7 +58,7 @@ export const getAllUserConfig = async (userRole: string, token = '') => {
 
 export const initializeUserData = async (id: string, token = '') => {
     try {
-        const response = await fetch(`/api/user/${id}`, {
+        const response = await fetch(`/api/v1/user/${id}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token || localStorage.getItem('authToken')}`,
@@ -75,6 +75,7 @@ export const initializeUserData = async (id: string, token = '') => {
             const userConfig = await getUserConfig(res.userRole, token);
             useUserConfig.getState().setUserConfig(userConfig)
         }
+        
         return text ? res : {};
     } catch (error) {
         console.error(error);

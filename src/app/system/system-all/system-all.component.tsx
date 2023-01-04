@@ -16,7 +16,7 @@ export const SystemAll: React.FC = () => {
     operation: fetchSystemAllData,
     data: allSelectionData,
   } = useHttp<SystemAllInformation[]>({
-    url: '/api/system/all-selection',
+    url: '/api/v1/system/all-selection',
     method: 'GET',
   });
   const {operation: createSystemAllData} = useHttp<SystemAllInformation[]>({method: 'POST'});

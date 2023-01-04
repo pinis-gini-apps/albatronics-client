@@ -13,7 +13,7 @@ export const LedInfoProvider: React.FC<LedInfoProviderProps> = ({children}) => {
     operation: fetchLedInfo,
     data: ledInfo = {powerLed: 0, accessLed: 0, stripLed: 0},
   } = useHttp<LedInfo>({
-    url: '/api/led/info',
+    url: '/api/v1/led/info',
     method: 'GET',
   });
   useEffect(() => {
