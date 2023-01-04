@@ -9,4 +9,5 @@ export interface SystemAllInformation {
   readonly tooltip: string;
   readonly restWarm: number;
   readonly modifiedTime: string;
+  readonly  message?: string;
 }
