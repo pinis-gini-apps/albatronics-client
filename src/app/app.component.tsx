@@ -26,9 +26,7 @@ export const AppComponent: React.FC = () => {
   
   useEffect(() => {
     if (localStorage.getItem('authToken')) {
-      const decode: {user_id: string} = jwt_decode(localStorage.getItem('authToken')!);
-      console.log(decode);
-      
+      const decode: {user_id: string} = jwt_decode(localStorage.getItem('authToken')!);      
       initializeUserData(decode.user_id);
     }
   }, [])
