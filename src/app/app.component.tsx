@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import {BrowserRouter} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {ThemeProvider} from '@mui/material/styles';
 
@@ -18,19 +18,31 @@ import {HttpErrorResponseInterceptor} from './_shared/modules/http/interceptors/
 import './styles.scss';
 import jwt_decode from 'jwt-decode'
 import { initializeUserData } from './api/get';
+import { MAX_FAIL_TIME_COUNT } from '../constants';
+import usePingServer from 'hooks/usePingServer';
 
 const jwtAuthService = jwtAuthServiceConstructor({});
 const httpClient = nativeHttpClient as HttpClient;
 
 export const AppComponent: React.FC = () => {
-  
+  const navigate = useNavigate();
+  const failedCount = usePingServer();
+
   useEffect(() => {
     if (localStorage.getItem('authToken')) {
       const decode: {user_id: string} = jwt_decode(localStorage.getItem('authToken')!);      
       initializeUserData(decode.user_id);
+    } else {
+      navigate('/login')
     }
   }, [])
 
+  useEffect(() => {    
+    if (failedCount === MAX_FAIL_TIME_COUNT) {
+      localStorage.removeItem('authToken');
+      navigate('/login')
+    }
+  }, [failedCount]);
 
   return (
     <AuthProvider
@@ -40,7 +52,6 @@ export const AppComponent: React.FC = () => {
       <NotificationProvider Component={SnackbarNotification}>
         <HttpProvider client={httpClient}>
           <AuthRequestInterceptor>
-            <BrowserRouter>
               <AuthResponseInterceptor>
                 <HttpErrorResponseInterceptor>
                   <React.Suspense>
@@ -50,7 +61,6 @@ export const AppComponent: React.FC = () => {
                   </React.Suspense>
                 </HttpErrorResponseInterceptor>
               </AuthResponseInterceptor>
-            </BrowserRouter>
           </AuthRequestInterceptor>
         </HttpProvider>
       </NotificationProvider>

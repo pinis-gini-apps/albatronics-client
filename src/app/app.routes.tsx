@@ -17,7 +17,7 @@ export const AppRoutes = () => {
     },
     {
       path: '/login',
-      element: isLogged ? <Navigate to="/main" replace /> : <LoginLazy/>,
+      element: <LoginLazy/>,
     },
     {
       path: '/main/*',

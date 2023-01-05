@@ -37,7 +37,7 @@ export const AppHeader: React.FC = () => {
     }
   }, [timestamp])
 
-  const handleLogout = React.useCallback(async () => {
+   const handleLogout = React.useCallback(async () => {
     await logout();
     navigate('/login');
   }, [logout]);
