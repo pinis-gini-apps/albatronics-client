@@ -29,17 +29,17 @@ export const SystemAll: React.FC = () => {
 
 
   const handleCreateAction = async (systemAll: SystemAllInformation) => {
-      await createSystemAllData({url: '/api/system/configuration', body: systemAll});      
+      await createSystemAllData({url: '/api/v1/system/configuration', body: systemAll});      
       await fetchSystemAllData();
     }
 
   const handleDeleteAction = async ({id}: SystemAllInformation) => {
-      await deleteSystemAllData({url: `/api/system/configuration/${id}`});
+      await deleteSystemAllData({url: `/api/v1/system/configuration/${id}`});
       await fetchSystemAllData();
   }
 
   const handleUpdateAction = async (systemAll: SystemAllInformation) => {
-      await updateSystemAllData({url: '/api/system/configuration', body: composeSystemAllUpsertDto(systemAll)});
+      await updateSystemAllData({url: '/api/v1/system/configuration', body: composeSystemAllUpsertDto(systemAll)});
       await fetchSystemAllData();
     };
 
