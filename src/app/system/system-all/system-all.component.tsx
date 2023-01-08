@@ -16,7 +16,7 @@ export const SystemAll: React.FC = () => {
     operation: fetchSystemAllData,
     data: allSelectionData,
   } = useHttp<SystemAllInformation[]>({
-    url: '/api/v1/system/all-selection',
+    url: '/api/v1/system/configuration',
     method: 'GET',
   });
   const {operation: createSystemAllData} = useHttp<SystemAllInformation[]>({method: 'POST'});
@@ -29,17 +29,17 @@ export const SystemAll: React.FC = () => {
 
 
   const handleCreateAction = async (systemAll: SystemAllInformation) => {
-      await createSystemAllData({url: '/api/system/all-selection', body: systemAll});      
+      await createSystemAllData({url: '/api/system/configuration', body: systemAll});      
       await fetchSystemAllData();
     }
 
   const handleDeleteAction = async ({id}: SystemAllInformation) => {
-      await deleteSystemAllData({url: `/api/system/all-selection/${id}`});
+      await deleteSystemAllData({url: `/api/system/configuration/${id}`});
       await fetchSystemAllData();
   }
 
   const handleUpdateAction = async (systemAll: SystemAllInformation) => {
-      await updateSystemAllData({url: '/api/system/all-selection', body: composeSystemAllUpsertDto(systemAll)});
+      await updateSystemAllData({url: '/api/system/configuration', body: composeSystemAllUpsertDto(systemAll)});
       await fetchSystemAllData();
     };
 
