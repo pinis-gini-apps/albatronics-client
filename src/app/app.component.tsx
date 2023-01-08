@@ -20,6 +20,7 @@ import jwt_decode from 'jwt-decode'
 import { initializeUserData } from './api/get';
 import { MAX_FAIL_TIME_COUNT } from '../constants';
 import usePingServer from 'hooks/usePingServer';
+import useSystemTimeAndDate from 'hooks/useSystemTimeAndDate';
 
 const jwtAuthService = jwtAuthServiceConstructor({});
 const httpClient = nativeHttpClient as HttpClient;
@@ -27,6 +28,7 @@ const httpClient = nativeHttpClient as HttpClient;
 export const AppComponent: React.FC = () => {
   const navigate = useNavigate();
   const failedCount = usePingServer();
+  useSystemTimeAndDate();
 
   useEffect(() => {
     if (localStorage.getItem('authToken')) {
