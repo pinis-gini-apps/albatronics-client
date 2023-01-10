@@ -24,8 +24,8 @@ import {SystemStatusRfPolicyInformation} from './models/system-status-rf-policy-
 
 ;export const SystemStatus: React.FC = () => {
   const ledInfo = React.useContext(LedInfoContext);
-  const {operation: fetchSystemData, data: systemData} = useHttp<SystemStatusSystemInformation[]>({url: '/api/v1/configuration/byTypes?ids=8', method: 'GET'});
-  const {operation: fetchCellularData, data: cellularData} = useHttp<SystemStatusCellularInformation[]>({url: `/api/v1/configuration/byTypes?ids=1`, method: 'GET'});
+  const {operation: fetchSystemData, data: systemData} = useHttp<SystemStatusSystemInformation[]>({url: '/api/v1/configuration/byTypesIds?ids=8', method: 'GET'});
+  const {operation: fetchCellularData, data: cellularData} = useHttp<SystemStatusCellularInformation[]>({url: `/api/v1/configuration/byTypesIds?ids=1`, method: 'GET'});
   const {operation: fetchPerformanceData, data: performanceData} = useHttp<SystemStatusPerformanceInformation[]>({url: '/api/v1/system/status/performance', method: 'GET'});
   const {operation: fetchENodeBStateDataData, data: eNodeBStateData} = useHttp<SystemStatusENodeBInformation>({url: '/api/v1/enodeb', method: 'GET'});
   const {operation: fetchRfPolicyData, data: rfPolicyData} = useHttp<SystemStatusRfPolicyInformation>({url: '/api/v1/rfpolicy', method: 'GET'});

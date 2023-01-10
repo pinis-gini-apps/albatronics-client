@@ -15,9 +15,9 @@ import {SystemStatusSystemInformation} from '../system-status/models/system-stat
 
 export const SystemGeneral: React.FC = () => {
   const ledInfo = React.useContext(LedInfoContext);
-  const {operation: fetchSystemData, data: systemData} = useHttp<SystemStatusSystemInformation[]>({url: '/api/v1/configuration/byTypes?ids=8', method: 'GET'});
-  const {operation: fetchEpcLicenseData, data: epcLicenseData} = useHttp<SystemGeneralEcpLicenseInformation[]>({url: `/api/v1/configuration/byTypes?ids=7`, method: 'GET'});
-  const {operation: fetchSoftwareVersionData, data: softwareVersionData} = useHttp<SystemGeneralSoftwareVersionInformation[]>({url: '/api/v1/configuration/byTypes?ids=2', method: 'GET'});
+  const {operation: fetchSystemData, data: systemData} = useHttp<SystemStatusSystemInformation[]>({url: '/api/v1/configuration/byTypesIds?ids=8', method: 'GET'});
+  const {operation: fetchEpcLicenseData, data: epcLicenseData} = useHttp<SystemGeneralEcpLicenseInformation[]>({url: `/api/v1/configuration/byTypesIds?ids=7`, method: 'GET'});
+  const {operation: fetchSoftwareVersionData, data: softwareVersionData} = useHttp<SystemGeneralSoftwareVersionInformation[]>({url: '/api/v1/configuration/byTypesIds?ids=2', method: 'GET'});
 
   const fetchRequiredData = React.useCallback(
       () => {
