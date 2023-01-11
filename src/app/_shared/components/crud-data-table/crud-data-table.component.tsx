@@ -28,6 +28,7 @@ type CrudDataTableProps<T> = {
   readonly onCreateActionClick: (row: T) => void;
   readonly onModeChange?: (mode: GridRowModes) => void;
   readonly emptyRowConstructor: () => Nullable<T>;
+  rowsToDeleteIds?: string[];
 };
 
 const handleRowEditStart = (
@@ -48,6 +49,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
     onUpdateActionClick,
     onCreateActionClick,
     emptyRowConstructor,
+    rowsToDeleteIds
   }: CrudDataTableProps<T>
 ): ReactElement => {
   const [rows, setRows] = React.useState<T[]>([]);
@@ -58,7 +60,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
       setRows(data);
     },
     [data]);
-  
+
   const handleAddRowClick = React.useCallback(
     () => {
       const id = generateNewRowId();
@@ -115,7 +117,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
         onCreateActionClick({...row, id: null});
       } else {
         onUpdateActionClick(row);
-      }
+      }      
     return row;
   },
   [onUpdateActionClick, onCreateActionClick],
@@ -170,6 +172,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
       isCellEditable={(params) => (params.field  !== 'changeStatus' && params.field  !== 'modifiedTime')}
       hideFooter={true}
       rowModesModel={rowModesModel}
+      getRowClassName={(params) => rowsToDeleteIds?.includes(params.row.id) ? 'red-row' : ''}
       components={{Toolbar: CrudDataTableEditToolbar}}
       componentsProps={{
         toolbar: {onCreateActionClick: handleAddRowClick}
