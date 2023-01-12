@@ -8,10 +8,11 @@ import { CrudDataTable } from '../../_shared/components/crud-data-table/crud-dat
 
 import { systemAllTableColumns } from './constants/system-all-table-columns';
 import { SystemAllInformation } from './models/system-all-information';
-import { composeSystemAllUpsertDto } from './constants/compose-system-all-upsert-dto';
 import { nullSystemAllInformationConstructor } from './null-system-all-information.constructor';
 import { Button } from '@mui/material';
 import { generateNewRowId } from 'app/_shared/components/crud-data-table/contsants/generate-new-row-id';
+
+import axios from 'axios'
 
 export const SystemAll: React.FC = () => {
   const {
@@ -23,7 +24,7 @@ export const SystemAll: React.FC = () => {
   });
   const { operation: createSystemAllData } = useHttp<SystemAllInformation[]>({ method: 'POST' });
   const { operation: updateSystemAllData } = useHttp<SystemAllInformation[]>({ method: 'PUT' });
-  const { operation: deleteSystemAllData } = useHttp<SystemAllInformation[]>({ method: 'DELETE' });
+ 
   const [updatedRows, setUpdatedRows] = useState<SystemAllInformation[]>([]);
 
   const [rowsToDeleteIds, setRowsToDeleteIds] = useState<string[]>([]);
@@ -40,23 +41,17 @@ export const SystemAll: React.FC = () => {
 
 
   const handleCreateAction = async (systemAll: SystemAllInformation) => {
-    // console.log(systemAll, 'handleCreateAction');
     const id = generateNewRowId();
     systemAll = {...systemAll, id};
     setUpdatedRows(prevState => [...prevState, systemAll]);
     setPostRows(prevState => [...prevState, systemAll]);
-    
-    // await createSystemAllData({ url: '/api/v1/system/configuration', body: systemAll });
-    // await fetchSystemAllData();
   }
 
   const handleDeleteAction = async ({ id }: SystemAllInformation) => {
     setRowsToDeleteIds(prevState => [...prevState, id]);
   }
 
-  const handleUpdateAction = async (systemAll: SystemAllInformation) => {
-    console.log('here');
-    
+  const handleUpdateAction = async (systemAll: SystemAllInformation) => {    
     setEditedRows(prevState => [...prevState, systemAll]);
     console.log(systemAll, 'handleUpdateAction');
     const newRows = updatedRows.map((r, i:number) => {
@@ -74,16 +69,17 @@ export const SystemAll: React.FC = () => {
     setEditedRows([]);
     setRowsToDeleteIds([]);
     setPostRows([]);
-
-
-
   }
   const handleOnSave = async () => {
-    console.log(editedRows, rowsToDeleteIds, postRows);
-    await createSystemAllData({ url: '/api/v1/system/configuration', body: postRows });
-    // await updateSystemAllData({ url: '/api/v1/system/configuration', body: systemAll }); put
-    // await deleteSystemAllData({ url: '/api/v1/system/configuration', body: systemAll }); delete
+    postRows.length > 0 && await createSystemAllData({ url: '/api/v1/configuration', body: postRows });
+    editedRows.length > 0 && await updateSystemAllData({ url: '/api/v1/configuration', body: editedRows })
+    rowsToDeleteIds.length > 0 && await axios.delete('/api/v1/configuration', 
+    { data: { rows: rowsToDeleteIds }, 
+    headers: { "Authorization": `Bearer ${localStorage.getItem('authToken')}`, 
+    'Content-Type': 'application/json'}})
 
+    if (postRows.length > 0 || editedRows.length > 0 || rowsToDeleteIds.length > 0) await fetchSystemAllData();
+    handleClear()
   }
 
   return (
