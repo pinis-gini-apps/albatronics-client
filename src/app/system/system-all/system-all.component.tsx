@@ -53,8 +53,7 @@ export const SystemAll: React.FC = () => {
 
   const handleUpdateAction = async (systemAll: SystemAllInformation) => {    
     setEditedRows(prevState => [...prevState, systemAll]);
-    console.log(systemAll, 'handleUpdateAction');
-    const newRows = updatedRows.map((r, i:number) => {
+    const newRows = updatedRows.map((r) => {
       if(r.id === systemAll.id) {
         return systemAll;
       }
