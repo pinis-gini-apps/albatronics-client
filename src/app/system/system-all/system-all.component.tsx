@@ -99,10 +99,10 @@ export const SystemAll: React.FC = () => {
         rowsToDeleteIds={rowsToDeleteIds}
       />
       <div className='buttons-container'>
-        <Button disableElevation variant="contained" size="medium" color="success" onClick={handleOnSave}>
+        <Button disabled={postRows.length === 0 && editedRows.length === 0 && rowsToDeleteIds.length === 0} variant="contained" size="medium" color="error" onClick={handleClear}>Clear</Button>
+        <Button disabled={postRows.length === 0 && editedRows.length === 0 && rowsToDeleteIds.length === 0} variant="contained" size="medium" color="success" onClick={handleOnSave}>
           SAVE & Apply
         </Button>
-        <Button disableElevation variant="contained" size="medium" color="error" onClick={handleClear}>Clear</Button>
       </div>
     </Stack>
   );
