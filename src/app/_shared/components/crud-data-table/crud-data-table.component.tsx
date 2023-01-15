@@ -54,9 +54,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
 ): ReactElement => {
   const [rows, setRows] = React.useState<T[]>([]);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
-  const handleProcessRowUpdateError = React.useCallback((error: Error) => {
-    console.log(error);
-    
+  const handleProcessRowUpdateError = React.useCallback((error: Error) => {    
   }, []);
   
   React.useEffect(() => {
