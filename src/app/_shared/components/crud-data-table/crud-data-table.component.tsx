@@ -28,6 +28,7 @@ type CrudDataTableProps<T> = {
   readonly onCreateActionClick: (row: T) => void;
   readonly onModeChange?: (mode: GridRowModes) => void;
   readonly emptyRowConstructor: () => Nullable<T>;
+  rowsToDeleteIds?: string[];
 };
 
 const handleRowEditStart = (
@@ -48,17 +49,21 @@ export const CrudDataTable = <T extends GridValidRowModel>(
     onUpdateActionClick,
     onCreateActionClick,
     emptyRowConstructor,
+    rowsToDeleteIds
   }: CrudDataTableProps<T>
 ): ReactElement => {
   const [rows, setRows] = React.useState<T[]>([]);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
-  const handleProcessRowUpdateError = React.useCallback((error: Error) => {}, []);
+  const handleProcessRowUpdateError = React.useCallback((error: Error) => {
+    console.log(error);
+    
+  }, []);
   
   React.useEffect(() => {
       setRows(data);
     },
     [data]);
-  
+
   const handleAddRowClick = React.useCallback(
     () => {
       const id = generateNewRowId();
@@ -84,20 +89,20 @@ export const CrudDataTable = <T extends GridValidRowModel>(
   );
 
   const handleSaveClick = React.useCallback(
-    (id: GridRowId) => () => {      
+    (row: T) => () => { 
     setRowModesModel({
       ...rowModesModel,
-      [id]: {mode: GridRowModes.View},
+      [row.id]: {mode: GridRowModes.View},
     });
   },
     [rowModesModel],
     );
 
   const handleCancelClick = React.useCallback(
-    (id: GridRowId, row: T) => () => {
+    (row: T) => () => {
     setRowModesModel({
       ...rowModesModel,
-      [id]: {
+      [row.id]: {
         mode: GridRowModes.View,
         ignoreModifications: true,
       },
@@ -115,7 +120,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
         onCreateActionClick({...row, id: null});
       } else {
         onUpdateActionClick(row);
-      }
+      }      
     return row;
   },
   [onUpdateActionClick, onCreateActionClick],
@@ -134,13 +139,13 @@ export const CrudDataTable = <T extends GridValidRowModel>(
           <GridActionsCellItem
             icon={<SaveIcon />}
             label="Save"
-            onClick={handleSaveClick(id)}
+            onClick={handleSaveClick(row)}
           />,
           <GridActionsCellItem
             icon={<CancelIcon />}
             label="Cancel"
             className="textPrimary"
-            onClick={handleCancelClick(id, row)}
+            onClick={handleCancelClick(row)}
             color="inherit"
           />,
         ];
@@ -170,6 +175,7 @@ export const CrudDataTable = <T extends GridValidRowModel>(
       isCellEditable={(params) => (params.field  !== 'changeStatus' && params.field  !== 'modifiedTime')}
       hideFooter={true}
       rowModesModel={rowModesModel}
+      getRowClassName={(params) => rowsToDeleteIds?.includes(params.row.id) ? 'red-row' : ''}
       components={{Toolbar: CrudDataTableEditToolbar}}
       componentsProps={{
         toolbar: {onCreateActionClick: handleAddRowClick}
